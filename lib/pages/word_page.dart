@@ -1,79 +1,65 @@
-import 'package:arapcaquiz/providers/learning_provider.dart';
+import 'package:arapcaquiz/models/word_model.dart';
+import 'package:arapcaquiz/providers/main_provider.dart';
 import 'package:arapcaquiz/widgets/custom_ar_text.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WordPage extends StatelessWidget {
-  final LearningProvider _learningProvider;
-  final String selectedWord;
   final int index;
-  const WordPage(
-      this._learningProvider, {
-        Key? key,
-        required this.selectedWord,
-        required this.index,
+  const WordPage({
+    Key? key,
+    required this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: ChangeNotifierProvider<LearningProvider>.value(
-        value: _learningProvider,
-        builder: (context, _){
-          return Consumer<LearningProvider>(
-            builder: (context, learning, _){
-              return Column(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: PageView.builder(
-                      itemCount: learning.arabicWords.length,
-                      controller: learning.getPageController(index),
-                      itemBuilder: (context, i){
-                        return WordCard(
-                          arabicWord: learning.arabicWords[i],
-                          turkishWord: learning.turkishWords[learning.arabicWords[i]]!,
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: TextButton(
-                        onPressed: (){
-                          learning.wordController.nextPage(
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.bounceIn,
-                          );
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 100,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                            ),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              CustomTrText(text: "Sonra"),
-                              Icon(Icons.arrow_forward_ios, color: Colors.black,),
-                            ],
-                          ),
+      body: Consumer<MainProvider>(
+        builder: (context, provider, _){
+          return Column(
+            children: [
+              Expanded(
+                flex: 5,
+                child: PageView.builder(
+                  itemCount: provider.words.length,
+                  controller: provider.getPageController(index),
+                  itemBuilder: (context, i){
+                    return WordCard(
+                      words: provider.words[i],
+                    );
+                  },
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: TextButton(
+                    onPressed: provider.nextWordPage,
+                    child: Container(
+                      height: 40,
+                      width: 100,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
                         ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
+                          CustomTrText(text: "Sonra"),
+                          Icon(Icons.arrow_forward_ios, color: Colors.black,),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              );
-            },
+                ),
+              ),
+            ],
           );
         },
       ),
@@ -82,12 +68,10 @@ class WordPage extends StatelessWidget {
 }
 
 class WordCard extends StatelessWidget {
-  final String arabicWord;
-  final String turkishWord;
+  final WordModel words;
   const WordCard({
     Key? key,
-    required this.arabicWord,
-    required this.turkishWord,
+    required this.words,
   }) : super(key: key);
 
   @override
@@ -114,7 +98,7 @@ class WordCard extends StatelessWidget {
                   ]
               ),
               child: CustomTrText(
-                text: turkishWord,
+                text: words.turkish!,
                 fontSize: 21,
               ),
             ),
@@ -137,7 +121,7 @@ class WordCard extends StatelessWidget {
                   ]
               ),
               child: CustomArText(
-                text: arabicWord,
+                text: words.arabic!,
               ),
             ),
           ),

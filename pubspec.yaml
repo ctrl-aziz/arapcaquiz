@@ -42,6 +42,7 @@ dependencies:
   flip_card: ^0.6.0
   animated_splash_screen: ^1.1.0
   shared_preferences: ^2.0.13
+  url_launcher: ^6.0.20
 
   # Firebase packages
   firebase_core: ^1.12.0

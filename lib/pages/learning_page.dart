@@ -1,16 +1,14 @@
-import 'package:arapcaquiz/data.dart';
 import 'package:arapcaquiz/pages/word_page.dart';
-import 'package:arapcaquiz/providers/learning_provider.dart';
+import 'package:arapcaquiz/providers/main_provider.dart';
 import 'package:arapcaquiz/widgets/custom_ar_text.dart';
+import 'package:arapcaquiz/widgets/custom_navigator.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LearningPage extends StatelessWidget {
   final String title;
-  LearningPage(this.title, {Key? key}) : super(key: key);
-
-  final LearningProvider _learningProvider = LearningProvider();
+  const LearningPage(this.title, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class LearningPage extends StatelessWidget {
         backgroundColor: Colors.grey[300],
         leading: IconButton(
           onPressed: (){
-            Navigator.maybePop(context);
+            Navigator.of(context).maybePop();
           },
           icon: const Icon(Icons.arrow_back, color: Color(0xff267DB2), size: 27,),
         ),
@@ -32,43 +30,29 @@ class LearningPage extends StatelessWidget {
       backgroundColor: Colors.grey[300],
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: ChangeNotifierProvider<LearningProvider>(
-          create: (_) => _learningProvider,
-          builder: (context, _){
-            return Consumer<LearningProvider>(
-              builder: (context, learning, _){
-                return ListView.builder(
-                  itemCount: words.length,
-                  itemBuilder: (context, i){
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: const Color(0xff267DB2),
-                            borderRadius: BorderRadius.circular(20.0)
-                        ),
-                        child: ListTile(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WordPage(
-                                  _learningProvider,
-                                  selectedWord: words[i]["arabic"]!,
-                                  index: i,
-                                ),
-                              ),
-                            );
-                          },
-                          title: CustomArText(
-                            text: words[i]["arabic"]!,
-                            color: Colors.white,
-                          ),
-                        ),
+        child: Consumer<MainProvider>(
+          builder: (context, provider, _){
+            return ListView.builder(
+              itemCount: provider.words.length,
+              itemBuilder: (context, i){
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 30.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: const Color(0xff267DB2),
+                        borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    child: ListTile(
+                      onTap: (){
+                        CustomNavigator.push(context, WordPage(index: i,));
+                      },
+                      title: CustomArText(
+                        text: provider.words[i].arabic!,
+                        color: Colors.white,
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 );
               },
             );
@@ -78,27 +62,3 @@ class LearningPage extends StatelessWidget {
     );
   }
 }
-
-/*
-FlipCard(
-              controller: _cardController,
-              front: Card(
-                color: const Color(0xff267DB2),
-                child: Center(
-                  child: Text(
-                    arabicWords[i],
-                    style: GoogleFonts.lemonada(color: Colors.white),
-                  ),
-                ),
-              ),
-              back: Card(
-                color: const Color(0xff267DB2),
-                child: Center(
-                  child: Text(
-                    turkishWords[arabicWords[i]]!,
-                    style: GoogleFonts.lemonada(color: Colors.white),
-                  ),
-                ),
-              ),
-            )
-*/

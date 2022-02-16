@@ -1,5 +1,6 @@
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class SettingsPage extends StatelessWidget {
         backgroundColor: Colors.grey[300],
         leading: IconButton(
           onPressed: (){
-            Navigator.maybePop(context);
+            Navigator.of(context).maybePop();
           },
           icon: const Icon(Icons.arrow_back, color: Color(0xff267DB2), size: 27,),
         ),
@@ -39,12 +40,25 @@ class SettingsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Column(
-                children: const [
-                  CustomTrText(
+                children: [
+                  const CustomTrText(
                     text: "Gmail",
                     fontSize: 17,
                   ),
-                  Icon(Icons.mail, size: 50, color: Color(0xffFF6A6B),),
+                  IconButton(
+                    onPressed: (){
+                      // TODO: Change email to admin email
+                      final Uri _emailLaunchUri = Uri(
+                          scheme: 'mailto',
+                          path: 'smith@example.com',
+                          queryParameters: {
+                            'subject': ''
+                          }
+                      );
+                      launch(_emailLaunchUri.toString());
+                    },
+                    icon: const Icon(Icons.mail, size: 50, color: Color(0xffFF6A6B),),
+                  ),
                 ],
               ),
               Column(
@@ -53,10 +67,23 @@ class SettingsPage extends StatelessWidget {
                     text: "Hotmail",
                     fontSize: 17,
                   ),
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: Image.asset("assets/img/outlook-logo.png", color: const Color(0xffFF6A6B),),
+                  TextButton(
+                    onPressed: (){
+                      // TODO: Change email to admin email
+                      final Uri _emailLaunchUri = Uri(
+                          scheme: 'mailto',
+                          path: 'smith@example.com',
+                          queryParameters: {
+                            'subject': ''
+                          }
+                      );
+                      launch(_emailLaunchUri.toString());
+                    },
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Image.asset("assets/img/outlook-logo.png", color: const Color(0xffFF6A6B),),
+                    ),
                   ),
                 ],
               ),

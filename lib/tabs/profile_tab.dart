@@ -1,4 +1,6 @@
-import 'package:arapcaquiz/providers/auth_provider.dart';
+import 'package:arapcaquiz/providers/main_provider.dart';
+import 'package:arapcaquiz/services/database.dart';
+import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -6,32 +8,22 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfileTab extends StatelessWidget {
-  ProfileTab({Key? key}) : super(key: key);
-
-  final List<String> avatars = [
-    "assets/svg/m-1.svg",
-    "assets/svg/m-2.svg",
-    "assets/svg/m-3.svg",
-    "assets/svg/f-1.svg",
-    "assets/svg/f-2.svg",
-    "assets/svg/f-3.svg",
-  ];
+  const ProfileTab({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final _successRate = Provider.of<AuthProvider>(context).successRate;
-    final _wordsHave = Provider.of<AuthProvider>(context).wordsHave;
+    final _provider = Provider.of<MainProvider>(context);
     return Column(
       children: [
         const SizedBox(
           height: 50.0,
         ),
-        CircleAvatar(
+        const CircleAvatar(
           radius: 50,
           backgroundColor: Colors.white,
           foregroundColor: Colors.grey,
           backgroundImage: Svg(
-            avatars[2],
+            "assets/svg/m-3.svg",
           ),
         ),
         const SizedBox(height: 10.0,),
@@ -46,9 +38,9 @@ class ProfileTab extends StatelessWidget {
               "Başarı oranı:",
               style: GoogleFonts.oswald(),
             ),
-            percent: _successRate / 1000000.0,
+            percent: (_provider.successRate >= 100000.0 ? 100000.0 : _provider.successRate) / 100000.0,
             center: Text(
-              "$_successRate",
+              "${_provider.successRate}",
               style: GoogleFonts.oswald(),
             ),
             barRadius: const Radius.circular(20.0),
@@ -58,9 +50,19 @@ class ProfileTab extends StatelessWidget {
         Row(
           children: [
             const SizedBox(width: 15.0,),
-            Text(
-              "Kazandığnız kelimeler: $_wordsHave",
-              style: GoogleFonts.oswald(),
+            FutureBuilder<int>(
+              future: Database.id(_provider.user).userWords,
+              builder: (context, snapshot){
+                if(snapshot.hasError){
+                  return const Text(
+                    "Hata(P_S_01): Lütfen uygulama kaptip yeniden açınız tekrar hata olursa bildirim yapınız",
+                    maxLines: 10,
+                  );
+                }
+                return CustomTrText(
+                  text: "Kazandığnız kelimeler: ${snapshot.data}",
+                );
+              },
             ),
           ],
         ),

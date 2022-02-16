@@ -1,5 +1,6 @@
 import 'package:arapcaquiz/pages/home_page.dart';
-import 'package:arapcaquiz/providers/auth_provider.dart';
+import 'package:arapcaquiz/providers/main_provider.dart';
+import 'package:arapcaquiz/widgets/custom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,14 +31,9 @@ class SplashProvider extends ChangeNotifier{
   Future<void> nexPage(BuildContext context) async {
     pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.bounceOut);
     if(pageController.page!.round() >= assets.length-1){
-      await Provider.of<AuthProvider>(context, listen: false).setUserState(false);
-      await Provider.of<AuthProvider>(context, listen: false).logInAnon();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
+      await Provider.of<MainProvider>(context, listen: false).setUserState(false);
+      await Provider.of<MainProvider>(context, listen: false).logInAnon();
+      CustomNavigator.pushReplacement(context, const HomePage(),);
       // TODO: Activate this if need
       // ImageCache().clear();
     }

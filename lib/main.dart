@@ -1,6 +1,6 @@
 import 'package:arapcaquiz/pages/home_page.dart';
 import 'package:arapcaquiz/pages/welcome_page.dart';
-import 'package:arapcaquiz/providers/auth_provider.dart';
+import 'package:arapcaquiz/providers/main_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +42,13 @@ class _MyAppState extends State<MyApp> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider()),
       ],
       builder: (context, _){
-         bool? _isNewUser = Provider.of<AuthProvider>(context).isNewUser;
+         bool? _isNewUser = Provider.of<MainProvider>(context).isNewUser;
          if (kDebugMode) {
            print("_isNewUser $_isNewUser");
-           print("User id: ${Provider.of<AuthProvider>(context).user}");
+           print("User id: ${Provider.of<MainProvider>(context).user}");
          }
         return MaterialApp(
           title: 'Arapça Quiz',
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
           ),
           home: AnimatedSplashScreen(
             splash: Icons.flutter_dash,
-            splashIconSize: 50.0,
+            splashIconSize: 70.0,
             nextScreen: _isNewUser == null || _isNewUser ? const WelcomePage() : const HomePage(),
           ),
         );
