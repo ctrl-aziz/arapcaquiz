@@ -1,4 +1,4 @@
-import 'package:arapcaquiz/pages/home_page.dart';
+import 'package:arapcaquiz/pages/home/home_page.dart';
 import 'package:arapcaquiz/pages/welcome_page.dart';
 import 'package:arapcaquiz/providers/main_provider.dart';
 import 'package:firebase_core/firebase_core.dart';

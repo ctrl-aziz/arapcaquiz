@@ -22,7 +22,7 @@ class Database{
       return UserModel.fromSnapshot(snapshot);
     }catch(e){
       if (kDebugMode) {
-        print("Error: $e");
+        print("_userDataFromSnapshot Error: $e");
       }
       rethrow;
     }

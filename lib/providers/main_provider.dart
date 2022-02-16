@@ -256,6 +256,37 @@ class MainProvider extends ChangeNotifier{
   bool? isRightAnswer(int pageIndex, int listIndex){
     return _quiz[pageIndex].answers![listIndex] == _quiz[pageIndex].turkish && _selectedAnswer==_quiz[pageIndex].turkish;
   }
+
+  Future<bool> willPop(BuildContext context) async{
+    return await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const CustomTrText(
+            text: "Testi Sonlandır",
+          ),
+          content: const CustomTrText(
+            text: "Testi bitmeden sonlandırsan puan eklenmeyecek.\nçıkmak istiyor musun?",
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                _selectedAnswer = null;
+                _correctAnswers = 0;
+                _wrongAnswers = 0;
+              },
+              child: const CustomTrText(text: "Evet",),
+            ),
+            TextButton(
+              onPressed: ()=> Navigator.of(context).pop(false),
+              child: const CustomTrText(text: "Hayır",),
+            ),
+          ],
+        );
+      },
+    ) ?? false;
+  }
 /// ******** Quiz functions end ********
 
 }

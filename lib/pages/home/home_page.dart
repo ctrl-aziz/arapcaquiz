@@ -1,12 +1,13 @@
 import 'package:arapcaquiz/pages/settings_page.dart';
 import 'package:arapcaquiz/providers/main_provider.dart';
-import 'package:arapcaquiz/tabs/learn_tab.dart';
-import 'package:arapcaquiz/tabs/profile_tab.dart';
-import 'package:arapcaquiz/tabs/quiz_tab.dart';
 import 'package:arapcaquiz/widgets/custom_navigator.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'tabs/learn_tab.dart';
+import 'tabs/profile_tab.dart';
+import 'tabs/quiz_tab.dart';
 
 /*
   * #267DB2

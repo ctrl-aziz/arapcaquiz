@@ -31,54 +31,57 @@ class QuizQuestionsPage extends StatelessWidget {
       backgroundColor: Colors.grey[300],
       body: Consumer<MainProvider>(
         builder: (context, provider, _){
-          return PageView.builder(
-            itemCount: provider.quiz.length,
-            physics: const NeverScrollableScrollPhysics(),
-            controller: provider.pageController,
-            itemBuilder: (context, pageIndex){
-              return Column(
-                children: [
-                  const SizedBox(height: 20.0,),
-                  Expanded(
-                    flex: 1,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomArText(
-                              text: provider.quiz[pageIndex].arabic!,
-                            ),
-                            const SizedBox(width: 13.0,),
-                            const CustomTrText(
-                              text: "ne demektir?",
-                              fontSize: 17,
-                            ),
-                          ],
+          return WillPopScope(
+            onWillPop: ()=> provider.willPop(context),
+            child: PageView.builder(
+              itemCount: provider.quiz.length,
+              physics: const NeverScrollableScrollPhysics(),
+              controller: provider.pageController,
+              itemBuilder: (context, pageIndex){
+                return Column(
+                  children: [
+                    const SizedBox(height: 20.0,),
+                    Expanded(
+                      flex: 1,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CustomArText(
+                                text: provider.quiz[pageIndex].arabic!,
+                              ),
+                              const SizedBox(width: 13.0,),
+                              const CustomTrText(
+                                text: "ne demektir?",
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 12,
-                    child: ListView.builder(
-                      itemCount: provider.quiz[pageIndex].answers!.length,
-                      itemBuilder: (context, listIndex){
-                        return CustomButton(
-                          onPressed: () => provider.chooseAnswer(context, pageIndex, listIndex),
-                          text: provider.quiz[pageIndex].answers![listIndex],
-                          icon: provider.optionsChar[listIndex],
-                          selected: provider.isSelected(pageIndex, listIndex),
-                          isRightAnswer: provider.isRightAnswer(pageIndex, listIndex),
-                        );
-                      },
+                    Expanded(
+                      flex: 12,
+                      child: ListView.builder(
+                        itemCount: provider.quiz[pageIndex].answers!.length,
+                        itemBuilder: (context, listIndex){
+                          return CustomButton(
+                            onPressed: () => provider.chooseAnswer(context, pageIndex, listIndex),
+                            text: provider.quiz[pageIndex].answers![listIndex],
+                            icon: provider.optionsChar[listIndex],
+                            selected: provider.isSelected(pageIndex, listIndex),
+                            isRightAnswer: provider.isRightAnswer(pageIndex, listIndex),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              );
-            },
+                  ],
+                );
+              },
+            ),
           );
         },
       ),
