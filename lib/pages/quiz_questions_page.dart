@@ -38,6 +38,7 @@ class QuizQuestionsPage extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               controller: provider.pageController,
               itemBuilder: (context, pageIndex){
+                print("provider.quiz: ${provider.quiz.length}");
                 return Column(
                   children: [
                     const SizedBox(height: 20.0,),

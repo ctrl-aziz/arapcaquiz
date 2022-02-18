@@ -18,48 +18,58 @@ class WordPage extends StatelessWidget {
       backgroundColor: Colors.grey[300],
       body: Consumer<MainProvider>(
         builder: (context, provider, _){
-          return Column(
-            children: [
-              Expanded(
-                flex: 5,
-                child: PageView.builder(
-                  itemCount: provider.words.length,
-                  controller: provider.getPageController(index),
-                  itemBuilder: (context, i){
-                    return WordCard(
-                      words: provider.words[i],
-                    );
-                  },
+          return WillPopScope(
+            onWillPop: () async{
+              provider.clearPageController();
+              return true;
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: PageView.builder(
+                    itemCount: provider.words.length,
+                    controller: provider.getPageController(index),
+                    itemBuilder: (context, i){
+                      return WordCard(
+                        words: provider.words[i],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: TextButton(
-                    onPressed: provider.nextWordPage,
-                    child: Container(
-                      height: 40,
-                      width: 100,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
+                Expanded(
+                  flex: 5,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: TextButton(
+                      onPressed: () => provider.nextWordPage(context),
+                      child: Container(
+                        height: 40,
+                        width: 100,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                          ),
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          CustomTrText(text: "Sonra"),
-                          Icon(Icons.arrow_forward_ios, color: Colors.black,),
-                        ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomTrText(text: provider.isWordPageEnd ? "Sonlandır" : "Sonra"),
+                            provider.isWordPageEnd
+                                ?
+                            const SizedBox()
+                                :
+                            const Icon(Icons.arrow_forward_ios, color: Colors.black,),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
         },
       ),

@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:arapcaquiz/models/quiz_model.dart';
 import 'package:arapcaquiz/services/database.dart';
+import 'package:arapcaquiz/widgets/custom_navigator.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -55,23 +56,36 @@ class MainProvider extends ChangeNotifier{
   int _correctAnswers = 0;
   int _wrongAnswers = 0;
 
+  bool _isWordPageEnd = false;
+  bool get isWordPageEnd => _isWordPageEnd;
+
   MainProvider(){
     getUserState().then((value) {
       isNewUser = value;
-      notifyListeners();
+      if(!(value??true)){
+        notifyListeners();
+      }
     });
     _auth.authStateChanges().listen((event) {
       _firebaseUser = event;
       if(event != null){
         Database.id(event.uid).userData.listen((user) {
           _user = user;
-          notifyListeners();
         });
-      }else{
-        notifyListeners();
       }
     });
+
+
   }
+
+  @override
+  dispose(){
+    pageController.dispose();
+    _wordController.dispose();
+    super.dispose();
+  }
+
+
 
 
   /// ******** Auth functions start ********
@@ -85,7 +99,6 @@ class MainProvider extends ChangeNotifier{
         print("Error: $e");
       }
     }
-    notifyListeners();
   }
 
   Future setUserState(bool state) async{
@@ -124,33 +137,57 @@ class MainProvider extends ChangeNotifier{
 
   PageController getPageController(int currentIndex){
     _wordController = PageController(initialPage: currentIndex);
+    _wordController.addListener(() {
+      if(_wordController.page!.round() < _words.length -1){
+        _isWordPageEnd = false;
+        notifyListeners();
+      }else{
+        _isWordPageEnd = true;
+        notifyListeners();
+      }
+    });
     return _wordController;
   }
 
-  void nextWordPage()async{
-    _wordController.nextPage(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceIn,
-    );
+  void clearPageController(){
+    _wordController.dispose();
+    _isWordPageEnd = false;
+  }
+
+  void nextWordPage(BuildContext context)async{
     String docID = _words[_wordController.page!.round()].id!;
     await Database.id(_firebaseUser!.uid).updateWordsUser(docID);
+    if(!_isWordPageEnd){
+      _wordController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.bounceIn,
+      );
+    }else{
+      Navigator.of(context).pop();
+      _isWordPageEnd = false;
+    }
   }
   /// ******** Learning functions end ********
 
   List<QuizModel> _convertWordsToQuiz(List<WordModel> _words){
     List<QuizModel> result = [];
-    List<String> answers = [];
     if(_words.isNotEmpty){
+      _words.shuffle();
       Random _ran = Random(0);
-      int _ranInt = _ran.nextInt(_words.length);
-      for(int i = _ranInt; i < (_words.length<4?_words.length:4); i++){
-        answers.add(_words[i].turkish!);
-      }
-
       for (var word in _words) {
+        List<String> answers = [];
+        int _ranInt = _ran.nextInt(_words.length - 4);
+        for(int i = _ranInt; i < _words.length; i++){
+          answers.add(_words[i].turkish!);
+          if(answers.length >= 5){
+            break;
+          }
+        }
         if(!answers.contains(word.turkish)){
+          answers.remove(answers.last);
           answers.add(word.turkish!);
         }
+        answers.shuffle();
         result.add(
           QuizModel(
             answers: answers,
@@ -160,6 +197,9 @@ class MainProvider extends ChangeNotifier{
             correctAnswer: word.turkish,
           ),
         );
+        if(result.length >= 10){
+          break;
+        }
       }
     }
     return result;
