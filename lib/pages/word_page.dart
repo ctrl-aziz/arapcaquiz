@@ -15,7 +15,6 @@ class WordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
       body: Consumer<MainProvider>(
         builder: (context, provider, _){
           return WillPopScope(

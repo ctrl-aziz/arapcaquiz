@@ -61,12 +61,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
         title: CustomTrText(
           text: titles[_currentIndex],
             color: Colors.black,
         ),
-        centerTitle: true,
         actions: [
           IconButton(
             onPressed: (){
@@ -80,7 +78,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           const SizedBox(width: 10.0,),
         ],
       ),
-      backgroundColor: Colors.grey[300],
       body: TabBarView(
         controller: _tabController,
         children: const [

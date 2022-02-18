@@ -2,6 +2,7 @@ import 'package:arapcaquiz/providers/main_provider.dart';
 import 'package:arapcaquiz/widgets/custom_ar_text.dart';
 import 'package:arapcaquiz/widgets/custom_button.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,20 +16,11 @@ class QuizQuestionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        leading: IconButton(
-          onPressed: (){
-            Navigator.of(context).maybePop();
-          },
-          icon: const Icon(Icons.arrow_back, color: Color(0xff267DB2), size: 27,),
-        ),
         title: CustomTrText(
           text: title,
           color: Colors.black,
         ),
-        centerTitle: true,
       ),
-      backgroundColor: Colors.grey[300],
       body: Consumer<MainProvider>(
         builder: (context, provider, _){
           return WillPopScope(
@@ -38,7 +30,9 @@ class QuizQuestionsPage extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               controller: provider.pageController,
               itemBuilder: (context, pageIndex){
-                print("provider.quiz: ${provider.quiz.length}");
+                if (kDebugMode) {
+                  print("provider.quiz: ${provider.quiz.length}");
+                }
                 return Column(
                   children: [
                     const SizedBox(height: 20.0,),

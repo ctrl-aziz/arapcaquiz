@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:arapcaquiz/models/quiz_model.dart';
 import 'package:arapcaquiz/services/database.dart';
-import 'package:arapcaquiz/widgets/custom_navigator.dart';
 import 'package:arapcaquiz/widgets/custom_tr_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -310,6 +309,10 @@ class MainProvider extends ChangeNotifier{
           ),
           actions: [
             TextButton(
+              onPressed: ()=> Navigator.of(context).pop(false),
+              child: const CustomTrText(text: "Hayır",),
+            ),
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true);
                 _selectedAnswer = null;
@@ -317,10 +320,6 @@ class MainProvider extends ChangeNotifier{
                 _wrongAnswers = 0;
               },
               child: const CustomTrText(text: "Evet",),
-            ),
-            TextButton(
-              onPressed: ()=> Navigator.of(context).pop(false),
-              child: const CustomTrText(text: "Hayır",),
             ),
           ],
         );

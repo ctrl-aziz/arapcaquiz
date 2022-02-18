@@ -52,13 +52,23 @@ class _MyAppState extends State<MyApp> {
          }
         return MaterialApp(
           title: 'Arapça Quiz',
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: true,
           theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: TextTheme(
                 bodyText1: GoogleFonts.oswald(),
                 bodyText2: GoogleFonts.oswald()
             ),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.grey[300],
+              foregroundColor: const Color(0xff267DB2),
+              centerTitle: true,
+              iconTheme: const IconThemeData(
+                color: Color(0xff267DB2),
+                size: 27,
+              )
+            ),
+            scaffoldBackgroundColor: Colors.grey[300],
           ),
           home: AnimatedSplashScreen(
             splash: Icons.flutter_dash,

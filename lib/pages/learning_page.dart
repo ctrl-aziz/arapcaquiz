@@ -14,20 +14,11 @@ class LearningPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        leading: IconButton(
-          onPressed: (){
-            Navigator.of(context).maybePop();
-          },
-          icon: const Icon(Icons.arrow_back, color: Color(0xff267DB2), size: 27,),
-        ),
         title: CustomTrText(
           text: title,
           color: Colors.black,
         ),
-        centerTitle: true,
       ),
-      backgroundColor: Colors.grey[300],
       body: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Consumer<MainProvider>(
