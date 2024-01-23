@@ -35,8 +35,8 @@ class Database{
 
   Future setNewUserData() async {
     try{
-      bool _userExist = (await _userCollection.doc(id).get()).exists;
-      if(_userExist){
+      bool userExist = (await _userCollection.doc(id).get()).exists;
+      if(userExist){
         if (kDebugMode) {
           print("User is exist");
         }

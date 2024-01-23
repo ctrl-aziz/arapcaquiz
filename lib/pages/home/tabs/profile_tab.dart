@@ -12,7 +12,7 @@ class ProfileTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _provider = Provider.of<MainProvider>(context);
+    final provider = Provider.of<MainProvider>(context);
     return Column(
       children: [
         const SizedBox(
@@ -38,9 +38,9 @@ class ProfileTab extends StatelessWidget {
               "Başarı oranı:",
               style: GoogleFonts.oswald(),
             ),
-            percent: (_provider.successRate >= 100000.0 ? 100000.0 : _provider.successRate) / 100000.0,
+            percent: (provider.successRate >= 100000.0 ? 100000.0 : provider.successRate) / 100000.0,
             center: Text(
-              "${_provider.successRate}",
+              "${provider.successRate}",
               style: GoogleFonts.oswald(),
             ),
             barRadius: const Radius.circular(20.0),
@@ -51,7 +51,7 @@ class ProfileTab extends StatelessWidget {
           children: [
             const SizedBox(width: 15.0,),
             FutureBuilder<int>(
-              future: Database.id(_provider.user).userWords,
+              future: Database.id(provider.user).userWords,
               builder: (context, snapshot){
                 if(snapshot.hasError){
                   return const Text(

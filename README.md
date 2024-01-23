@@ -1,16 +1,54 @@
-# arapcaquiz
+# ArapcaQuiz
 
-A new Flutter project.
+ArapcaQuiz is a Flutter app that helps you learn and practice Arabic language and grammar. You can choose from different topics and levels, and answer multiple-choice questions to test your skills. You can also track your progress and see your scores.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+To run this project locally, you need to have Flutter and Dart installed on your machine.
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone this repository:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```bash
+git clone https://github.com/ctrl-aziz/arapcaquiz.git
+cd arapcaquiz
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. Install the dependencies:
+
+```bash
+flutter pub get
+```
+
+3. Run the app:
+
+```bash
+flutter run
+```
+
+## Usage
+
+To use the app, you need to select a topic and a level from the main menu. The app will then display a question and four possible answers. You need to tap the correct answer before the time runs out. You can also use hints or skip the question if you are stuck. The app will show you the correct answer and an explanation after each question. You can also see your score and the number of questions you have answered correctly at the top of the screen.
+
+## Screenshots
+
+Here are some screenshots of the app:
+
+![Splash screen](/screenshots/01.jpg)
+![Landing screen](/screenshots/02.jpg)
+![Landing screen](/screenshots/03.jpg)
+![Landing screen](/screenshots/04.jpg)
+![Learning menu](/screenshots/05.jpg)
+![Learning words list](/screenshots/06.jpg)
+![Quiz levels](/screenshots/07.jpg)
+![Quiz screen](/screenshots/08.jpg)
+![Quiz screen](/screenshots/09.jpg)
+![Profile screen](/screenshots/10.jpg)
+![Contact screen](/screenshots/10.jpg)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+If you have any questions or feedback, feel free to contact me at ctrlaziz0@gmail.com.

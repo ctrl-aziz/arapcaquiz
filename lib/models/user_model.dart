@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  static const String SUCCESS_RATE = "success_rate";
+  static const String successRateFieldName = "success_rate";
   String? uid;
 
   UserModel.uid(this.uid);
@@ -13,12 +13,12 @@ class UserModel {
   });
 
   UserModel.fromSnapshot(DocumentSnapshot data){
-    successRate = double.tryParse(data.get(SUCCESS_RATE).toString());
+    successRate = double.tryParse(data.get(successRateFieldName).toString());
   }
 
   Map<String, dynamic> toJson(){
     return {
-      SUCCESS_RATE: successRate,
+      successRateFieldName: successRate,
     };
   }
 }

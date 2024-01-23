@@ -39,14 +39,14 @@ class SettingsPage extends StatelessWidget {
                   IconButton(
                     onPressed: (){
                       // TODO: Change email to admin email
-                      final Uri _emailLaunchUri = Uri(
+                      final Uri emailLaunchUri = Uri(
                           scheme: 'mailto',
                           path: 'smith@example.com',
                           queryParameters: {
                             'subject': ''
                           }
                       );
-                      launch(_emailLaunchUri.toString());
+                      launch(emailLaunchUri.toString());
                     },
                     icon: const Icon(Icons.mail, size: 50, color: Color(0xffFF6A6B),),
                   ),
@@ -61,14 +61,14 @@ class SettingsPage extends StatelessWidget {
                   TextButton(
                     onPressed: (){
                       // TODO: Change email to admin email
-                      final Uri _emailLaunchUri = Uri(
+                      final Uri emailLaunchUri = Uri(
                           scheme: 'mailto',
                           path: 'smith@example.com',
                           queryParameters: {
                             'subject': ''
                           }
                       );
-                      launch(_emailLaunchUri.toString());
+                      launch(emailLaunchUri.toString());
                     },
                     child: SizedBox(
                       width: 50,

@@ -5,14 +5,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -45,19 +48,19 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<MainProvider>(create: (_) => MainProvider()),
       ],
       builder: (context, _){
-         bool? _isNewUser = Provider.of<MainProvider>(context).isNewUser;
+         bool? isNewUser = Provider.of<MainProvider>(context).isNewUser;
          if (kDebugMode) {
-           print("_isNewUser $_isNewUser");
+           print("_isNewUser $isNewUser");
            print("User id: ${Provider.of<MainProvider>(context).user}");
          }
         return MaterialApp(
           title: 'Arapça Quiz',
-          debugShowCheckedModeBanner: true,
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primarySwatch: Colors.blue,
             textTheme: TextTheme(
-                bodyText1: GoogleFonts.oswald(),
-                bodyText2: GoogleFonts.oswald()
+                bodyLarge: GoogleFonts.oswald(),
+                bodyMedium: GoogleFonts.oswald()
             ),
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.grey[300],
@@ -73,7 +76,7 @@ class _MyAppState extends State<MyApp> {
           home: AnimatedSplashScreen(
             splash: Icons.flutter_dash,
             splashIconSize: 70.0,
-            nextScreen: _isNewUser == null || _isNewUser ? const WelcomePage() : const HomePage(),
+            nextScreen: isNewUser == null || isNewUser ? const WelcomePage() : const HomePage(),
           ),
         );
       },
@@ -83,7 +86,8 @@ class _MyAppState extends State<MyApp> {
   Future loadSvgs()async{
     late Future result;
     for(int i = 0; i < assets.length; i++){
-      result = precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, assets[i]), null);
+      result = precacheImage(ExactAssetImage(assets[i]), context);
+      // result = precachePicture(ExactAssetPicture(SvgPicture.svgStringDecoderBuilder, assets[i]), null);
     }
     return result;
   }

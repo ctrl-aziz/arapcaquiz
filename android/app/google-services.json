@@ -33,6 +33,64 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410201050230:android:b2ff4deb14cf9e83656357",
+        "android_client_info": {
+          "package_name": "com.quizapp.arapcaquiz.arapcaquizadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410201050230-erlnq7banjj7s7g3pe07uguithuhvjtm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnLafxZTGwAKLz9hB1GtObQnosRvFAWrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410201050230-erlnq7banjj7s7g3pe07uguithuhvjtm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410201050230:android:ce2703a7a66751df656357",
+        "android_client_info": {
+          "package_name": "com.quizapp.artrquiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410201050230-erlnq7banjj7s7g3pe07uguithuhvjtm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnLafxZTGwAKLz9hB1GtObQnosRvFAWrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410201050230-erlnq7banjj7s7g3pe07uguithuhvjtm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
